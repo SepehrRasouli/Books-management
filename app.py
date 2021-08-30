@@ -103,50 +103,54 @@ def showBookList():
     if valid_response == '1':
         print("Genre ?")
         genre = input("> ")
-        wb = load_workbook(filename=configdata.DATABASEPATH)
+        wb = load_workbook(filename=pathtodatabase)
         ws = wb['Books']
         for data in ws.iter_cols():
             for values in data:
-                if values.value and genre.lower() in values.value.strip().lower():
+                if values.value and values.column == 3 and genre.lower() in values.value.strip().lower():
                     writer = ws.cell(row=values.row,column=1).value 
                     bookname = ws.cell(row=values.row,column=2).value
                     review = ws.cell(row=values.row,column=4).value
                     print(f"Writer Name : {writer}, Book Name : {bookname}, Genre : {genre}, Review : {review}")
+                continue
         wb.close()
         takeInput()
     if valid_response == '2':
         print("Writer ?")
         writer = input("> ")
-        wb = load_workbook(filename=configdata.DATABASEPATH)
+        wb = load_workbook(filename=pathtodatabase)
         ws = wb['Books']
         for data in ws.iter_cols():
             for values in data:
-                if values.value and writer.lower() in values.value.strip().lower():
+                if values.value and values.column == 1 and writer.lower() in values.value.strip().lower():
                     genre = ws.cell(row=values.row,column=3).value 
                     bookname = ws.cell(row=values.row,column=2).value
                     review = ws.cell(row=values.row,column=4).value
                     print(f"Writer Name : {writer}, Book Name : {bookname}, Genre : {genre}, Review : {review}")
+                continue
         wb.close()
         takeInput()
     if valid_response == '3':
         print("By Book Name?")
         bookname = input("> ")
-        wb = load_workbook(filename=configdata.DATABASEPATH)
+        wb = load_workbook(filename=pathtodatabase)
         ws = wb['Books']
         for data in ws.iter_cols():
             for values in data:
-                if values.value and bookname.lower() in values.value.strip().lower():
+                if values.value and values.column == 2 and bookname.lower() in values.value.strip().lower():
                     writer = ws.cell(row=values.row,column=1).value 
                     genre = ws.cell(row=values.row,column=3).value
                     review = ws.cell(row=values.row,column=4).value
                     print(f"Writer Name : {writer}, Book Name : {bookname}, Genre : {genre}, Review : {review}")
+                continue
 
         wb.close()
         takeInput()
     else:
         print("Showing all data.")
-        wb = load_workbook(filename=configdata.DATABASEPATH)
+        wb = load_workbook(filename=pathtodatabase)
         ws = wb['Books']
+        number = 1
         for data in ws.iter_cols():
             for values in data:
                 if values.value:
@@ -155,11 +159,15 @@ def showBookList():
                     genre = ws.cell(row=values.row,column=3).value
                     review = ws.cell(row=values.row,column=4).value
                     print(f"Writer Name : {writer}, Book Name : {bookname}, Genre : {genre}, Review : {review}")
-        
+                
+
+            break
+
+        takeInput()
 
     
 def showChartByGenre():
-    wb = load_workbook(filename=configdata.DATABASEPATH)
+    wb = load_workbook(filename=pathtodatabase)
     ws = wb['Books']
     genres = []
     value_per_genre = {}
@@ -185,7 +193,7 @@ def showChartByGenre():
 
 
 def showChartByWriterName():
-    wb = load_workbook(filename=configdata.DATABASEPATH)
+    wb = load_workbook(filename=pathtodatabase)
     ws = wb['Books']
     writers = []
     value_per_writer = {}
