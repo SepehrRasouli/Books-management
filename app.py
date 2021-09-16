@@ -27,13 +27,13 @@ def addBook():
         review = ''
     else:
         review = review.split("//") if '//' in review else review
-
-    if type(writer) == list:
+    database = [writer,bookName,genre]
+    if all(type(data) == list for data in (writer,bookName,genre)):
         # If The user gives more than two data.
         print(f"Adding Book To {configdata.DATABASEPATH}")
         writeToDatabase([writer,bookName,genre,review])
 
-    elif type(writer) == str:
+    elif all(type(data) == str for data in (writer,bookName,genre,review)):
         print(f"Adding Book To {configdata.DATABASEPATH}")
         writeToDatabase([writer,bookName,genre,review])
 
